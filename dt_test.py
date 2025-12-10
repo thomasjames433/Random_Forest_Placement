@@ -1,19 +1,40 @@
-from sklearn import datasets 
-from  sklearn.model_selection import train_test_split
+import pandas as pd
 import numpy as np
+df=pd.read_csv("placement.csv")
+
+df["PlacementStatus"]=(df["PlacementStatus"]=="Placed").astype(int)
+df["ExtracurricularActivities"]=(df["ExtracurricularActivities"]=="Yes").astype(int)
+df["PlacementTraining"]=(df["PlacementTraining"]=="Yes").astype(int)
+
+X=df[[
+    "CGPA",
+    "Internships",
+    "Projects",
+    "Workshops/Certifications",
+    "AptitudeTestScore",
+    "SoftSkillsRating",
+    "ExtracurricularActivities",
+    "PlacementTraining",
+    "SSC_Marks",
+    "HSC_Marks"
+]].values
+
+y=df["PlacementStatus"].values
+
+from sklearn.preprocessing import StandardScaler
+scaler=StandardScaler()
+X=scaler.fit_transform(X)
+
 from descision_tree import DescisionTree
 
-data=datasets.load_breast_cancer()
-X,y=data.data, data.target
-
-X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2)
 
 clf=DescisionTree()
-clf.fit(X_train,y_train)
-predictions=clf.predict(X_test)
+clf.fit(X,y)
+predictions=clf.predict(X)
+
 
 def accuracy(y_test,y_pred):
     return np.sum(y_test==y_pred)/len(y_test)
 
-acc= accuracy(y_test, predictions)
+acc= accuracy(y, predictions)
 print(acc)

@@ -18,7 +18,7 @@ class Node:
 
 class DescisionTree:
 
-    def __init__(self,min_samples_split=2,max_depth=100,n_features=None):
+    def __init__(self,min_samples_split=2,max_depth=10,n_features=None):
         self.min_samples_split=min_samples_split
         self.max_depth=max_depth
         self.n_features=n_features
@@ -56,6 +56,7 @@ class DescisionTree:
         right=self._grow_tree(X[right_idxs,:],y[right_idxs],depth+1)
         
         return Node(best_feat,best_thresh,left,right)
+    
     def _best_split(self,X,y,feat_idxs):
         best_gain=-1
         split_idx=None
