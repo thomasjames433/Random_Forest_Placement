@@ -26,9 +26,9 @@ scaler=StandardScaler()
 X=scaler.fit_transform(X)
 
 from descision_tree import DescisionTree
+from random_forest import RandomForest
 
-
-clf=DescisionTree()
+clf=RandomForest() # to test descision tree clf=DescisionTree()
 clf.fit(X,y)
 predictions=clf.predict(X)
 
